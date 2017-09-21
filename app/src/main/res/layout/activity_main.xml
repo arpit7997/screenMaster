@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.codingblocks.screenshot.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="Your Profile!"
+        android:textSize="15dp"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+    <ImageView
+        android:id="@+id/personalImage"
+        android:layout_width="150dp"
+        android:background="#000000"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/personalName"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:textSize="20dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        tools:text="Name" />
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/btn"
+        android:padding="5dp"
+        android:layout_margin="10dp"
+        android:background="@color/tw__composer_blue_text"
+        android:text="View All Profile"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All Profiles"
+        android:id="@+id/text"
+        android:textStyle="bold"
+        android:layout_margin="5dp"
+        android:gravity="center"/>
+
+
+    <ListView
+        android:id="@+id/messageListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/input_background"
+        android:transcriptMode="alwaysScroll"
+        tools:listitem="@layout/item_message"></ListView>
+
+
+</LinearLayout>
+
