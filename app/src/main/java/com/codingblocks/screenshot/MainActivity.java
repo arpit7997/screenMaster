@@ -1,6 +1,7 @@
 package com.codingblocks.screenshot;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -35,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -43,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Handler;
 
 public class MainActivity extends AppCompatActivity implements OnItemClickListener {
     public static final String ANONYMOUS = "anonymous";
@@ -69,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
     ImageView personalImage;
     TextView personalName, text;
     Button btn;
+
+    private ProgressDialog progress;
 
     int i = 1;
 
@@ -143,8 +148,10 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                                 Glide.with(personalImage.getContext()).load(s).into(personalImage);
                             } else {
                                 personalImage.setImageResource(R.drawable.def);
-                                FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, null, User_uid);
-                                mDatabaseReference.child(User_uid).setValue(friendlyMessage);
+                               // FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, null, User_uid);
+                                //mDatabaseReference.child(User_uid).setValue(friendlyMessages);
+                                mDatabaseReference.child(User_uid).child("name").setValue(User_name);
+                                mDatabaseReference.child(User_uid).child("uid").setValue(User_uid);
                             }
                         }
 
@@ -291,6 +298,11 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                 finish();
             }
         } else if (requestCode == RC_PHOTO_PICKER && resultCode == RESULT_OK) {
+            progress=new ProgressDialog(this);
+            progress.setMessage("Downloading image, please wait....");
+            progress.setIndeterminate(true);
+            progress.setCancelable(false);
+            progress.show();
             Uri selectedImageUri = data.getData();
             StorageReference photoRef = mPhotoStorageReference.child(selectedImageUri.getLastPathSegment());
 
@@ -301,11 +313,20 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                     Uri downloadUri = taskSnapshot.getDownloadUrl();
                     mDatabaseReference.child(User_uid).child("photoUrl").setValue(downloadUri.toString());
 
-                    FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, downloadUri.toString(), User_uid);
-                    mDatabaseReference.child(User_uid).setValue(friendlyMessage);
+                    Glide.with(personalImage.getContext()).load(downloadUri.toString()).into(personalImage);
+
+//                    FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, downloadUri.toString(), User_uid);
+//                    mDatabaseReference.child(User_uid).setValue(friendlyMessage);
+                    new android.os.Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            progress.dismiss();
+                        }
+                    }, 1500);
 
                 }
             });
+
 
         }
     }
