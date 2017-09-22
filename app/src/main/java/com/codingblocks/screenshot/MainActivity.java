@@ -136,7 +136,11 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                 if (firebaseUser != null) {
 
                     User_uid = firebaseUser.getUid();
+                    User_name = firebaseUser.getDisplayName();
                     mDatabaseReference = mFirebaseDatabase.getReference();
+
+                    mDatabaseReference.child(User_uid).child("name").setValue(User_name);
+                    mDatabaseReference.child(User_uid).child("uid").setValue(User_uid);
 
                     DatabaseReference ref = mDatabaseReference.child(User_uid).child("photoUrl");
 
@@ -148,10 +152,9 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                                 Glide.with(personalImage.getContext()).load(s).into(personalImage);
                             } else {
                                 personalImage.setImageResource(R.drawable.def);
-                               // FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, null, User_uid);
+                                FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, null, User_uid);
                                 //mDatabaseReference.child(User_uid).setValue(friendlyMessages);
-                                mDatabaseReference.child(User_uid).child("name").setValue(User_name);
-                                mDatabaseReference.child(User_uid).child("uid").setValue(User_uid);
+                                mDatabaseReference.child(User_uid).child("photoUrl").setValue(null);
                             }
                         }
 
@@ -161,12 +164,9 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
                         }
                     });
 
-                    User_name = firebaseUser.getDisplayName();
                     //setting name
                     mUserName = User_name;
                     mPhotoStorageReference = mFirebaseStorage.getReference().child(User_uid);
-
-                    mUserName = User_name;
 
                     Signed_in();
 
@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements OnItemClickListen
 
                     Glide.with(personalImage.getContext()).load(downloadUri.toString()).into(personalImage);
 
-//                    FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, downloadUri.toString(), User_uid);
+                    FriendlyMessage friendlyMessage = new FriendlyMessage(mUserName, downloadUri.toString(), User_uid);
 //                    mDatabaseReference.child(User_uid).setValue(friendlyMessage);
                     new android.os.Handler().postDelayed(new Runnable() {
                         @Override
