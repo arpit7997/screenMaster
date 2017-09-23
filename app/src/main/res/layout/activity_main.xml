@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="com.codingblocks.screenshot.MainActivity">
 
@@ -35,15 +36,23 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         tools:text="Name" />
     </LinearLayout>
+    <com.balysv.materialripple.MaterialRippleLayout
+        android:id="@+id/ripple"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/btn"
-        android:padding="5dp"
+        android:padding="10dp"
         android:layout_margin="10dp"
         android:background="@color/tw__composer_blue_text"
-        android:text="View All Profile"/>
+        android:text="View All Profile"
+        />
+
+    </com.balysv.materialripple.MaterialRippleLayout>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,9 +67,9 @@
         android:id="@+id/messageListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/input_background"
         android:transcriptMode="alwaysScroll"
-        tools:listitem="@layout/item_message"></ListView>
+        tools:listitem="@layout/item_message"
+        ></ListView>
 
 
 </LinearLayout>
